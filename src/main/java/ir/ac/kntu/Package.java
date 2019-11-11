@@ -5,28 +5,30 @@ import com.sun.xml.internal.bind.v2.runtime.reflect.Lister;
 import java.util.ArrayList;
 
 public class Package {
-    public void sendPackage(Date currdate){
-        if (currdate.getYear()>=sendtime.getYear())
-            status= Status.notreceived;
-        if (currdate.getMonth()>=sendtime.getMonth())
-            status= Status.notreceived;
-        if (currdate.getDay()>=sendtime.getDay())
-            status= Status.notreceived;
+    public static void sendPackages(Date currdate){
+        for (int i = 0; i < packages.size(); i++) {
+            if (currdate.getYear()>=packages.get(i).sendtime.getYear())
+                packages.get(i).status= Status.notreceived;
+            if (currdate.getMonth()>=packages.get(i).sendtime.getMonth())
+                packages.get(i).status= Status.notreceived;
+            if (currdate.getDay()>=packages.get(i).sendtime.getDay())
+                packages.get(i).status= Status.notreceived;
+        }
     }
     public static void printPackages(){
         for (int i = 0; i < packages.size(); i++) {
-            System.out.println(packages.get(i).name);
+            System.out.println((i+1)+"."+packages.get(i).name);
         }
     }
-    public void showStatus(int item){
-        System.out.println(packages.get(item).status);
+    public static void showStatus(int item){
+        System.out.println(packages.get(item-1).status);
     }
 
     public void changeCurrentcity(City city){
         currentcity=city;
     }
 
-    public Package searchByOriginAndDestination(City origin,City destination){
+    public static Package searchByOriginAndDestination(City origin,City destination){
         for (int i = 0; i < packages.size(); i++) {
             if (packages.get(i).origin==origin && packages.get(i).destination==destination)
                 return packages.get(i);
